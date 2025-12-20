@@ -1,53 +1,15 @@
 {
   "main": [
     {
-      "label": "Getting Started",
-      "items": [
-        {
-          "label": "Introduction",
-          "autogenerate": {
-            "directory": "getting-started/introduction"
-          }
-        },
-        {
-          "label": "Global Settings",
-          "autogenerate": {
-            "directory": "getting-started/global-settings"
-          }
-        },
-        {
-          "label": "Navigation",
-          "slug": "getting-started/navigation"
-        }
-      ]
-    },
-    {
-      "label": "Content",
-      "items": [
-        {
-          "label": "Components and Block",
-          "autogenerate": {
-            "directory": "contents/components"
-          }
-        },
-        {
-          "label": "Editing Content",
-          "autogenerate": {
-            "directory": "contents/editing"
-          }
-        }
-      ]
-    },
-    {
-      "label": "Reference",
+      "label": "Articles",
       "autogenerate": {
-        "directory": "reference"
+        "directory": "articles"
       }
     },
     {
-      "label": "Configurations",
+      "label": "Research",
       "autogenerate": {
-        "directory": "configurations"
+        "directory": "research"
       }
     }
   ]

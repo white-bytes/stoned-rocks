@@ -1,14 +1,14 @@
 ---
 title: |
-  Ready to explore <span class='light-text'>Dockit experience? </span>
-description: Discover tips, resources, and guidance to maximize experience with our documentation.
+  Beautiful MIDI controllers for your studio <span class='light-text'> </span>
+description: Build your beautiful world.
 enable: true
 fill_button:
   enable: true
-  label: Get Started
-  link: /getting-started/introduction/overview/
+  label: Build
+  link: /actions
 outline_button:
   enable: true
-  label: View Docs
-  link: /getting-started/introduction/overview/
+  label: Learn More
+  link: /actions
 ---

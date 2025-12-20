@@ -22,6 +22,9 @@ export default defineConfig({
   image: {
     service: { entrypoint: "astro/assets/services/noop" },
   },
+  server: {
+    port: 4555,
+  },
   integrations: [
     starlight({
       title,

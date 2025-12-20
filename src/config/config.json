@@ -1,6 +1,9 @@
 {
   "site": {
     "title": "Stoned Rock - Collection",
+    "description": "A collection of knowledge.",
+    "author": "Brandon West",
+    "email": "bran@isbrandon.org",
     "logo": "/src/assets/logo-light.svg",
     "logo_darkmode": "/src/assets/logo-dark.svg",
     "logo_width": "127",

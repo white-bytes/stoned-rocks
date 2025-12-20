@@ -12,7 +12,13 @@ const locale = Astro.currentLocale || "en";
 
 const menu = await getTranslations(locale || "en");
 
-const { settings, navigation_button } = config;
+const { settings } = config;
+const navigation_button = config.navigation_button as {
+  enable: boolean;
+  label: string;
+  link: string;
+  translations?: Record<string, string>;
+};
 const { main }: { main: any[] } = menu;
 const pathname = Astro.request.url;
 
@@ -147,6 +153,14 @@ const hasSidebar = Astro.locals.starlightRoute.hasSidebar;
 </nav>
 
 <script>
+  import { client } from "@/lib/appwrite";
+  
+  if (client) {
+      console.log('Pinging Appwrite...');
+      client.ping().then(() => console.log('Appwrite ping success')).catch((e) => console.error('Appwrite ping failed', e));
+  }
+
+
   // add header bg after scroll
   const nav = document.querySelector(".navbar");
   const sidebar = document.querySelector(".sidebar-nav");

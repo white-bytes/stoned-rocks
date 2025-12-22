@@ -1,6 +1,7 @@
 # DocKit
 
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b2cf9517-4178-4cca-9535-5a1b0ae2ad93/deploy-status)](https://app.netlify.com/sites/wordparticles/deploys)
 
 A modern, feature-rich documentation theme built on top of **Astro Starlight** with custom components, enhanced UI, and multilingual support.
 

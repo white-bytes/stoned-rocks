@@ -11,6 +11,8 @@ import sidebar from "./src/config/sidebar.json";
 
 import { fileURLToPath } from "url";
 
+import mdx from "@astrojs/mdx";
+
 const { site } = config;
 const { title, logo, logo_darkmode } = site;
 
@@ -25,35 +27,34 @@ export default defineConfig({
   server: {
     port: 4555,
   },
-  integrations: [
-    starlight({
-      title,
-      logo: {
-        light: logo,
-        dark: logo_darkmode,
-        alt: "DocKit Logo",
-      },
-      // @ts-ignore
-      social: social.main || [],
-      locales,
-      sidebar: sidebar.main || [],
-      customCss: ["./src/styles/global.css"],
-      components: {
-        Head: "./src/components/override-components/Head.astro",
-        Header: "./src/components/override-components/Header.astro",
-        Hero: "./src/components/override-components/Hero.astro",
-        PageFrame: "./src/components/override-components/PageFrame.astro",
-        PageSidebar: "./src/components/override-components/PageSidebar.astro",
-        TwoColumnContent: "./src/components/override-components/TwoColumnContent.astro",
-        ContentPanel: "./src/components/override-components/ContentPanel.astro",
-        Pagination: "./src/components/override-components/Pagination.astro",
-        Sidebar: "./src/components/override-components/Sidebar.astro",
-        
-        
-      },
+  integrations: [starlight({
+    title,
+    logo: {
+      light: logo,
+      dark: logo_darkmode,
+      alt: "DocKit Logo",
+    },
+    // @ts-ignore
+    social: social.main || [],
+    locales,
+    sidebar: sidebar.main || [],
+    customCss: ["./src/styles/global.css"],
+    components: {
+      Head: "./src/components/override-components/Head.astro",
+      Header: "./src/components/override-components/Header.astro",
+      Hero: "./src/components/override-components/Hero.astro",
+      PageFrame: "./src/components/override-components/PageFrame.astro",
+      PageSidebar: "./src/components/override-components/PageSidebar.astro",
+      TwoColumnContent: "./src/components/override-components/TwoColumnContent.astro",
+      ContentPanel: "./src/components/override-components/ContentPanel.astro",
+      Pagination: "./src/components/override-components/Pagination.astro",
+      Sidebar: "./src/components/override-components/Sidebar.astro",
+      PageTitle: "./src/components/override-components/PageTitle.astro",
       
-    }),
-  ],
+      
+    },
+    
+  }), mdx()],
   vite: {
     plugins: [tailwindcss(),viewTransitions()],
     resolve: {

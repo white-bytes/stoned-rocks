@@ -1,0 +1,13 @@
+#cloud-config
+write_files:
+  - path: /etc/netplan/99-bridge-metric.yaml
+    permissions: '0600'
+    content: |
+      network:
+        version: 2
+        ethernets:
+          extra0:
+            dhcp4-overrides:
+              route-metric: 50
+runcmd:
+  - netplan apply

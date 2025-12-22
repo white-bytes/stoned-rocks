@@ -1,7 +1,7 @@
 {
   "name": "stoned-rock",
   "version": "0.0.2",
-  "description": "DocKit Astro is a simple, modern documentation theme built using Astro and Tailwind CSS",
+  "description": "Collection of word particles describing the state of my software development projects.",
   "author": "Themefisher",
   "license": "MIT",
   "type": "module",

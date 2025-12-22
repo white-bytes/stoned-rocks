@@ -29,7 +29,13 @@ const ctaSection = defineCollection({
 export const collections = {
   docs: defineCollection({
     loader: docsLoader(),
-    schema: docsSchema(),
+    schema: docsSchema({
+      extend: z.object({
+        tags: z.array(z.string()).optional(),
+        author: z.string().optional(),
+        category: z.string().optional(),
+      }),
+    }),
   }),
   i18n: defineCollection({ loader: i18nLoader(), schema: i18nSchema() }),
   ctaSection,

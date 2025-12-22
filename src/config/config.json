@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "Stoned Rock - Collection",
+    "title": "Word Particles - Collection",
     "description": "A collection of knowledge.",
     "author": "Brandon West",
     "email": "bran@isbrandon.org",
@@ -8,7 +8,7 @@
     "logo_darkmode": "/src/assets/logo-dark.svg",
     "logo_width": "127",
     "logo_height": "32",
-    "logo_text": "Stoned Rock"
+    "logo_text": "Word Particles"
   },
   "settings": {
     "search": true,
@@ -25,5 +25,10 @@
     "enable": true,
     "label": "Articles",
     "link": "/articles/"
+  },
+  "Latest": {
+    "enable": true,
+    "label": "Latest",
+    "link": "/latest/"
   }
 }

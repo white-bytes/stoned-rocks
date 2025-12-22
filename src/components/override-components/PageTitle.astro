@@ -1,0 +1,81 @@
+---
+import { Badge } from '@astrojs/starlight/components';
+import type { Props } from '@astrojs/starlight/props';
+
+const { entry } = Astro.props;
+console.log('PageTitle props:', Object.keys(Astro.props));
+if (!entry) {
+  console.log('Use of PageTitle without entry prop in:', Astro.url.pathname);
+}
+const entryData = entry ? entry.data : undefined;
+const title = entryData ? entryData.title : 'No Title';
+const { tags, author, category } = (entryData || {}) as any;
+---
+
+<h1 id="_top">{title}</h1>
+
+{
+  (tags || author || category) && (
+    <div class="metadata-row not-content">
+      {category && (
+        <div class="meta-item">
+            <span class="label">Category</span>
+            <span class="value">{category}</span>
+        </div>
+      )}
+      
+      {author && (
+        <div class="meta-item">
+             <span class="label">Author</span>
+             <span class="value">{author}</span>
+        </div>
+      )}
+        
+      {tags && tags.length > 0 && (
+        <div class="meta-item tags">
+          {tags.map((tag: string) => (
+             <Badge text={tag} variant="note" size="small" />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+<style>
+  h1 {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .metadata-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--sl-color-gray-4);
+  }
+
+  .value {
+    color: var(--sl-color-white);
+  }
+  
+  .tags {
+    gap: 0.5rem;
+  }
+</style>

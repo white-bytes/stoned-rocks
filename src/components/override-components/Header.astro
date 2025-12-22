@@ -12,7 +12,23 @@ const locale = Astro.currentLocale || "en";
 
 const menu = await getTranslations(locale || "en");
 
-const { settings, navigation_button } = config;
+const { settings, navigation_button, Latest } = config as {
+  settings: {
+    search: boolean;
+    theme_switcher: boolean;
+  };
+  navigation_button: {
+    enable: boolean;
+    label: string;
+    link: string;
+    translations?: Record<string, string>;
+  };
+  Latest: {
+    enable: boolean;
+    label: string;
+    link: string;
+  };
+};
 const { main }: { main: any[] } = menu;
 const pathname = Astro.request.url;
 
@@ -114,6 +130,18 @@ const hasSidebar = Astro.locals.starlightRoute.hasSidebar;
         </li>
       )
     }
+     {
+      Latest?.enable && (
+        <li class="mt-4 inline-block lg:hidden ml-2">
+          <a
+            class="btn btn-primary btn-sm"
+            href={Latest.link}
+          >
+            {Latest.label}
+          </a>
+        </li>
+      )
+    }
   </ul>
 
   <div
@@ -137,9 +165,18 @@ const hasSidebar = Astro.locals.starlightRoute.hasSidebar;
           href={navigation_button.link}
         >
           {navigation_button.translations
-            ? // @ts-ignore
-              navigation_button.translations[locale] || navigation_button.label
+            ? navigation_button.translations[locale] || navigation_button.label
             : navigation_button.label}
+        </a>
+      )
+    }
+    {
+      Latest?.enable && (
+        <a
+          class="btn btn-primary hidden! lg:inline-block! ml-4"
+          href={Latest.link}
+        >
+          {Latest.label}
         </a>
       )
     }

@@ -2,7 +2,7 @@
   "name": "stoned-rock",
   "version": "0.0.2",
   "description": "Collection of word particles describing the state of my software development projects.",
-  "author": "Themefisher",
+  "author": "Brandon West",
   "license": "MIT",
   "type": "module",
   "scripts": {

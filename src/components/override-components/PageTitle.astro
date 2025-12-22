@@ -1,8 +1,8 @@
 ---
 import { Badge } from '@astrojs/starlight/components';
-import type { Props } from '@astrojs/starlight/props';
 
-const { entry } = Astro.props;
+
+const { entry } = Astro.locals.starlightRoute;
 console.log('PageTitle props:', Object.keys(Astro.props));
 if (!entry) {
   console.log('Use of PageTitle without entry prop in:', Astro.url.pathname);

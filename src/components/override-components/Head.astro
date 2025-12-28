@@ -1,26 +1,22 @@
 ---
 import { AstroFont } from "astro-font";
-import theme from "@/config/theme.json";
+import { theme } from "@/config/index.ts";
 const { head } = Astro.locals.starlightRoute;
 
 // font families
+// font families
 const pf = theme.fonts.font_family.primary;
-// @ts-ignore
-const sf = theme.fonts.font_family.secondary ;
+const sf = theme.fonts.font_family.secondary;
 
-let fontPrimary, fontSecondary;
-if (theme.fonts.font_family.primary) {
-  fontPrimary = theme.fonts.font_family.primary
+const formatFont = (font: string) => {
+  if (!font) return "";
+  return font
     .replace(/\+/g, " ")
     .replace(/:[ital,]*[ital@]*[wght@]*[0-9,;.]+/gi, "");
-}
-// @ts-ignore
-if (theme.fonts.font_family.secondary) {
-// @ts-ignore
-  fontSecondary = theme.fonts.font_family.secondary
-    .replace(/\+/g, " ")
-    .replace(/:[ital,]*[ital@]*[wght@]*[0-9,;.]+/gi, "");
-}
+};
+
+const fontPrimary = formatFont(pf);
+const fontSecondary = sf ? formatFont(sf) : "";
 
 ---
 

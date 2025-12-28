@@ -1,0 +1,76 @@
+---
+---
+<div class="feedback-widget mt-12 p-6 border border-gray-200 dark:border-gray-800 rounded-xl bg-gray-50 dark:bg-gray-900/50">
+  <h3 class="text-lg font-semibold mb-2">Was this page helpful?</h3>
+  <div class="flex gap-4 mb-4" id="rating-buttons">
+    <button class="px-4 py-2 border rounded hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors" data-rating="5">👍 Yes</button>
+    <button class="px-4 py-2 border rounded hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors" data-rating="1">👎 No</button>
+  </div>
+  
+  <div id="feedback-form" class="hidden">
+    <textarea 
+      id="feedback-comment" 
+      class="w-full p-2 border rounded bg-transparent mb-2" 
+      placeholder="Anything else you'd like to share? (optional)"
+    ></textarea>
+    <button id="submit-feedback" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">Submit</button>
+  </div>
+
+  <p id="feedback-thanks" class="hidden text-green-600 font-medium">Thanks for your feedback!</p>
+  
+  <div class="mt-4 text-sm text-gray-500">
+    <span id="page-views">Loading views...</span>
+  </div>
+</div>
+
+<script>
+  const ratingButtons = document.getElementById('rating-buttons');
+  const feedbackForm = document.getElementById('feedback-form');
+  const submitBtn = document.getElementById('submit-feedback');
+  const thanksMsg = document.getElementById('feedback-thanks');
+  const viewsEl = document.getElementById('page-views');
+  
+  let selectedRating = 0;
+
+  // Track Views
+  fetch(`/api/views?path=${encodeURIComponent(window.location.pathname)}`)
+    .then(res => res.json())
+    .then(data => {
+      if (viewsEl) viewsEl.textContent = `${data.views} page views`;
+    })
+    .catch(() => {
+      if (viewsEl) viewsEl.style.display = 'none';
+    });
+
+  // Handle Feedback
+  ratingButtons?.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('button');
+    if (btn) {
+      selectedRating = parseInt(btn.dataset.rating || '0');
+      ratingButtons.classList.add('hidden');
+      feedbackForm?.classList.remove('hidden');
+    }
+  });
+
+  submitBtn?.addEventListener('click', async () => {
+    const comment = (document.getElementById('feedback-comment') as HTMLTextAreaElement)?.value;
+    
+    try {
+      const res = await fetch('/api/feedback', {
+        method: 'POST',
+        body: JSON.stringify({
+          path: window.location.pathname,
+          rating: selectedRating,
+          comment
+        })
+      });
+      
+      if (res.ok) {
+        feedbackForm?.classList.add('hidden');
+        thanksMsg?.classList.remove('hidden');
+      }
+    } catch (err) {
+      console.error('Failed to submit feedback', err);
+    }
+  });
+</script>

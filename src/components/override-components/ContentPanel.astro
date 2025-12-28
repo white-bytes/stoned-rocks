@@ -1,5 +1,11 @@
+---
+import Feedback from "../Feedback.astro";
+---
 <div class="content-panel">
-	<div class="sl-container"><slot /></div>
+	<div class="sl-container">
+    <slot />
+    <Feedback />
+  </div>
 </div>
 
 <style>

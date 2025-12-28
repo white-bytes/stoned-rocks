@@ -1,7 +1,7 @@
 ---
-import config from "@/config/config.json";
+import { settings } from "@/config/index.ts";
 
-const { theme_switcher }: { theme_switcher: boolean } = config.settings;
+const { theme_switcher } = settings;
 const { className }: { className?: string } = Astro.props;
 ---
 

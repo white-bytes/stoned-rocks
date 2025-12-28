@@ -1,12 +1,12 @@
 ---
-import config from "@/config/config.json" assert { type: "json" };
+import { site, settings } from "@/config/index.ts";
 import ImageMod from "../ImageMod.astro";
 const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
 
 const { src, srcDarkmode }: { src?: string; srcDarkmode?: string } =
   Astro.props;
 
-const theme_switcher = config.settings.theme_switcher;
+const theme_switcher = settings.theme_switcher;
 const {
   logo,
   logo_darkmode,
@@ -14,14 +14,7 @@ const {
   logo_height,
   logo_text,
   title,
-}: {
-  logo: string;
-  logo_darkmode: string;
-  logo_width: any;
-  logo_height: any;
-  logo_text: string;
-  title: string;
-} = config.site;
+} = site;
 ---
 
 <a href={siteTitleHref} class="navbar-brand inline-block">

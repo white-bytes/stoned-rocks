@@ -4,10 +4,7 @@ import starlight from "@astrojs/starlight";
 import { viewTransitions } from "astro-vtbot/starlight-view-transitions";
 
 import tailwindcss from "@tailwindcss/vite";
-import config from "./src/config/config.json" assert { type: "json" };
-import social from "./src/config/social.json";
-import locals from "./src/config/locals.json";
-import sidebar from "./src/config/sidebar.json";
+import { site, social, locals, sidebar } from "./src/config/index.ts";
 
 import { fileURLToPath } from "url";
 
@@ -20,7 +17,16 @@ export const locales = locals
 
 
 // https://astro.build/config
+import cloudflare from "@astrojs/cloudflare";
+
 export default defineConfig({
+  output: 'server',
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true,
+      persistTo: './.wrangler/state/v3'
+    }
+  }),
   image: {
     service: { entrypoint: "astro/assets/services/noop" },
   },

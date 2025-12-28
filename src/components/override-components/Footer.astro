@@ -1,9 +1,8 @@
 ---
-import config from "@/config/config.json";
-import social from "@/config/social.json";
+import { params, social } from "@/config/index.ts";
 import { Icon } from "@astrojs/starlight/components";
 import { markdownify } from "@/lib/utils/textConverter";
-import { getTranslations } from "@/lib/utils/languagePerser";
+import { getTranslations } from "@/lib/utils/languageParser";
 
 const locale = Astro.currentLocale;
 
@@ -60,11 +59,11 @@ const currentLocal = Astro.currentLocale || "en";
       }
 
       {
-        config?.params?.footer_contact?.enable && (
+        params.footer_contact?.enable && (
           <div>
             <h4>Connect With Us</h4>
             <form
-              action={config?.params?.footer_contact?.action}
+              action={params.footer_contact?.action}
               class="mail-form"
             >
               <input type="email" placeholder="Enter your email" required />
@@ -110,7 +109,7 @@ const currentLocal = Astro.currentLocale || "en";
       }
     </div>
     <div class="bottom-footer">
-      <p set:html={markdownify(config?.params?.copyright)} />
+      <p set:html={markdownify(params.copyright)} />
       <a href={currentLocal + "/privacy-policy"}
         >{Astro.locals.t("footer.privacy", "Privacy Policy")}</a
       >

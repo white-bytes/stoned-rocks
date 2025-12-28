@@ -1,8 +1,8 @@
 ---
 import SiteTitle from "./SiteTitle.astro";
-import { getTranslations } from "@/lib/utils/languagePerser";
+import { getTranslations } from "@/lib/utils/languageParser";
 
-import config from "@/config/config.json" assert { type: "json" };
+import { site, settings, navigation_button, latest as Latest } from "@/config/index.ts";
 import ThemeSwitch from "./ThemeSwitch.astro";
 import Search from "./Search.astro";
 import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
@@ -11,24 +11,6 @@ import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
 const locale = Astro.currentLocale || "en";
 
 const menu = await getTranslations(locale || "en");
-
-const { settings, navigation_button, Latest } = config as {
-  settings: {
-    search: boolean;
-    theme_switcher: boolean;
-  };
-  navigation_button: {
-    enable: boolean;
-    label: string;
-    link: string;
-    translations?: Record<string, string>;
-  };
-  Latest: {
-    enable: boolean;
-    label: string;
-    link: string;
-  };
-};
 
 const { main }: { main: any[] } = menu;
 const pathname = Astro.request.url;
@@ -188,8 +170,7 @@ const hasSidebar = Astro.locals.starlightRoute.hasSidebar;
   import { client } from "@/lib/appwrite";
   
   if (client) {
-      console.log('Pinging Appwrite...');
-      client.ping().then(() => console.log('Appwrite ping success')).catch((e) => console.error('Appwrite ping failed', e));
+      // Appwrite client initialized
   }
 
 
@@ -197,18 +178,22 @@ const hasSidebar = Astro.locals.starlightRoute.hasSidebar;
   const nav = document.querySelector(".navbar");
   const sidebar = document.querySelector(".sidebar-nav");
 
-  window.onscroll = function () {
-    if (
-      document.body.scrollTop > 10 ||
-      document.documentElement.scrollTop > 10
-    ) {
-      nav?.parentElement?.classList.add("navbar-scrolled");
-      sidebar?.classList.add("navbar-scrolled");
-    } else {
-      nav?.parentElement?.classList.remove("navbar-scrolled");
-      sidebar?.classList.remove("navbar-scrolled");
-    }
-  };
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (
+        document.body.scrollTop > 10 ||
+        document.documentElement.scrollTop > 10
+      ) {
+        nav?.parentElement?.classList.add("navbar-scrolled");
+        sidebar?.classList.add("navbar-scrolled");
+      } else {
+        nav?.parentElement?.classList.remove("navbar-scrolled");
+        sidebar?.classList.remove("navbar-scrolled");
+      }
+    },
+    { passive: true }
+  );
 
   // Dropdown Menu Toggler For Mobile
   // ----------------------------------------

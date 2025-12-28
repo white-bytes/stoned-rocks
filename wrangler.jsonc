@@ -1,0 +1,19 @@
+{
+  "name": "stoned-rock",
+  "compatibility_date": "2025-12-28",
+  "main": "./dist/_worker.js",
+  "assets": { "directory": "./dist" },
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "YOUR_KV_NAMESPACE_ID"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "stoned-rock-db",
+      "database_id": "YOUR_D1_DATABASE_ID"
+    }
+  ]
+}

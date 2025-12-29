@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts');
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Supabase Test</title>
+	</head>
+	<body>
+		<h1>Supabase Posts</h1>
+    <p>If you see posts below, the connection is working!</p>
+		<ul>
+			{posts.map(post => (
+				<li>
+          <strong>{post.data.title}</strong> (ID: {post.id})
+        </li>
+			))}
+		</ul>
+    
+    <h2>Debug Data</h2>
+    <pre>{JSON.stringify(posts, null, 2)}</pre>
+	</body>
+</html>

@@ -78,7 +78,16 @@ export const SocialConfigSchema = z.object({
   main: z.array(SocialLinkSchema),
 });
 
-export const SidebarItemSchema = z.lazy(() =>
+export interface SidebarItem {
+  label: string;
+  link?: string;
+  autogenerate?: {
+    directory: string;
+  };
+  items?: SidebarItem[];
+}
+
+export const SidebarItemSchema: z.ZodType<SidebarItem> = z.lazy(() =>
   z.object({
     label: z.string(),
     link: z.string().optional(),
@@ -89,7 +98,7 @@ export const SidebarItemSchema = z.lazy(() =>
       .optional(),
     items: z.array(SidebarItemSchema).optional(),
   })
-);
+) as any;
 
 export const SidebarConfigSchema = z.object({
   main: z.array(SidebarItemSchema),
@@ -102,14 +111,21 @@ export const LocaleSchema = z.object({
 
 export const LocalsConfigSchema = z.record(LocaleSchema);
 
-export const MenuItemSchema = z.lazy(() =>
+export interface MenuItem {
+  name: string;
+  url: string;
+  hasChildren?: boolean;
+  children?: MenuItem[];
+}
+
+export const MenuItemSchema: z.ZodType<MenuItem> = z.lazy(() =>
   z.object({
     name: z.string(),
     url: z.string(),
     hasChildren: z.boolean().optional(),
     children: z.array(MenuItemSchema).optional(),
   })
-);
+) as any;
 
 export const MenuConfigSchema = z.object({
   main: z.array(MenuItemSchema),

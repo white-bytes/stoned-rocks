@@ -1,4 +1,4 @@
-# DocKit
+# Stoned Rocks
 
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b2cf9517-4178-4cca-9535-5a1b0ae2ad93/deploy-status)](https://app.netlify.com/sites/wordparticles/deploys)
@@ -13,8 +13,8 @@ First, clone the repository and install dependencies:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/dockit-astro.git
-cd dockit-astro
+git clone https://github.com/yourusername/stoned-rocks.git
+cd stoned-rocks
 
 # Install dependencies
 yarn install

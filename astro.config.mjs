@@ -10,7 +10,6 @@ import { fileURLToPath } from "url";
 
 import mdx from "@astrojs/mdx";
 
-const { site } = config;
 const { title, logo, logo_darkmode } = site;
 
 export const locales = locals
@@ -24,7 +23,7 @@ export default defineConfig({
   adapter: cloudflare({
     platformProxy: {
       enabled: true,
-      persistTo: './.wrangler/state/v3'
+      persist: { path: './.wrangler/state/v3' }
     }
   }),
   image: {
@@ -35,6 +34,7 @@ export default defineConfig({
   },
   integrations: [starlight({
     title,
+
     logo: {
       light: logo,
       dark: logo_darkmode,
@@ -43,6 +43,7 @@ export default defineConfig({
     // @ts-ignore
     social: social.main || [],
     locales,
+    // @ts-ignore
     sidebar: sidebar.main || [],
     customCss: ["./src/styles/global.css"],
     components: {

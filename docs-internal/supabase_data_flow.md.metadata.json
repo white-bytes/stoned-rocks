@@ -1,0 +1,5 @@
+{
+  "artifactType":  "ARTIFACT_TYPE_OTHER",
+  "summary":  "Documentation explaining the data flow architecture when using Supabase in this Astro project, covering Client, Server (API), and Database interactions.",
+  "updatedAt":  "2025-12-29T18:40:13.745103Z"
+}

@@ -193,6 +193,8 @@ Je eerste documentatiepagina inhoud komt hier...
 }
 ```
 
+
+
 ### Step 7: Customize Styling (Optional)
 
 Add custom styles to `src/styles/global.css`:

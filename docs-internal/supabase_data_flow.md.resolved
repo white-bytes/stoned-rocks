@@ -1,0 +1,79 @@
+# Supabase Data Flow Architecture
+
+This document references the general expected flow of data for the `stoned-rock` project when interacting with Supabase.
+
+## 1. Hierarchy of Methods
+
+We use a tiered approach to data access to balance security, performance, and simplicity.
+
+### Level 1: Astro Server-Side Fetching (Read-Only / Initial Load)
+**Used for:** Fetching data to render pages (e.g., Blog posts, Site settings).
+*   **Where:** Frontmatter of [.astro](file:///Users/bwest/workspace/stoned-rock/src/pages/supabase-test.astro) files (e.g., [src/pages/supabase-test.astro](file:///Users/bwest/workspace/stoned-rock/src/pages/supabase-test.astro)).
+*   **How:** Imports `supabase` client from [src/lib/supabase.ts](file:///Users/bwest/workspace/stoned-rock/src/lib/supabase.ts).
+*   **Flow:**
+    1.  User requests page.
+    2.  Astro Server (at build time or SSR time) calls Supabase.
+    3.  Data is baked into HTML.
+    4.  User receives static HTML with data present.
+
+### Level 2: API Routes (Write / Sensitive Read)
+**Used for:** Form submissions, User Feedback, user-specific data, or actions requiring validation.
+*   **Where:** `src/pages/api/*.ts` (e.g., [src/pages/api/feedback.ts](file:///Users/bwest/workspace/stoned-rock/src/pages/api/feedback.ts)).
+*   **How:**
+    1.  Frontend sends `fetch('/api/feedback', ...)` POST request.
+    2.  API Route validates input (Zod/manual checks).
+    3.  API Route uses `supabase` client to `insert` or `update` data.
+    4.  API Route returns success JSON to frontend.
+
+### Level 3: Client-Side (Interactive / Real-time)
+**Used for:** Live updates, client-specific interactions (like "likes" or "views") after the page loads.
+*   **Where:** `<script>` tags or Framework components (React/Vue/Svelte) inside [.astro](file:///Users/bwest/workspace/stoned-rock/src/pages/supabase-test.astro) pages.
+*   **How:**
+    1.  Page loads.
+    2.  Client JS initializes a public Supabase client (if needed) or calls our own API Routes.
+    *   *Note: For security, prefer calling our own API routes (`src/pages/api/`) rather than exposing Supabase direct write access to the browser, unless RLS (Row Level Security) is strictly configured.*
+
+---
+
+## 2. The Flow Diagram
+
+```mermaid
+graph TD
+    User[User Browser]
+    
+    subgraph "Astro Application"
+        Page[Page Load (.astro)]
+        ClientScript[Client Script / UI]
+        API[API Routes (src/pages/api/*)]
+        Lib[Supabase Client (src/lib/supabase.ts)]
+    end
+    
+    subgraph "External Services"
+        Supabase[(Supabase Database)]
+    end
+
+    %% Read Flow
+    User -- "1. Request URL" --> Page
+    Page -- "2. Fetch Data (Server)" --> Lib
+    Lib -- "3. Query" --> Supabase
+    Supabase -- "4. Data" --> Lib
+    Page -- "5. Render HTML" --> User
+
+    %% Write Flow (Interaction)
+    User -- "A. Submit Form/Action" --> ClientScript
+    ClientScript -- "B. Fetch POST" --> API
+    API -- "C. Validate & Auth" --> API
+    API -- "D. DB Operation" --> Lib
+    Lib -- "E. Insert/Update" --> Supabase
+```
+
+## 3. Key Components
+
+*   **`src/lib/supabase.ts`**: The "Phone". Initializes the connection securely using env vars. **Do not modify** this unless changing global config.
+*   **`src/pages/api/`**: The "Switchboard". Receives incoming requests, validates them, and routes them to the database.
+*   **RLS (Row Level Security)**: *Crucial*. Even if we use Server-Side rendering, RLS policies on Supabase ensure that if a key leaks or a bug occurs, users can only access what they are allowed to.
+
+## 4. Best Practices
+1.  **Never expose Service Keys** (admin keys) to the client. Use them only in `src/pages/api` or Astro server frontmatter.
+2.  **Use API Routes for Writes**. This adds a layer where we can validate data (spam check, type check) before it hits our DB.
+3.  **Type Safety**. Use generated Supabase types (if available) to ensure TypeScript knows your schema.
